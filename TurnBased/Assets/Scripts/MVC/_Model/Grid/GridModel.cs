@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GridModel : MonoBehaviour
+public class GridModel : IGridModel
 {
-    // Start is called before the first frame update
-    void Start()
+    public GridModel(GridConfiguration gridConfiguration)
     {
-        
+        width = gridConfiguration.width;
+        height = gridConfiguration.height;
     }
+    public int width { get; set; }
+    public int height { get; set; }
+    public int[,] gridCells { get; set; }
 
-    // Update is called once per frame
-    void Update()
+    public void ClearModel()
     {
-        
+        width = 0;
+        height = 0;
     }
 }

@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class GridSystemInitializeController : MonoBehaviour
+public class GridSystemInitializeController : IBaseController, IEnterController
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private IGridModel m_gridModel;
 
-    // Update is called once per frame
-    void Update()
+    public GridSystemInitializeController(IGridModel gridModel)
     {
-        
+        m_gridModel = gridModel;
+    }
+    public void OnEnterExecute()
+    {
+        m_gridModel.gridCells = new int[m_gridModel.width, m_gridModel.height];
     }
 }
