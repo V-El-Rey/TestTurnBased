@@ -35,7 +35,7 @@ public class GridCellHighlightController : IBaseController, IUpdateController, I
                     m_inputModel.gridCellHitCoordinates.x >= 0 && m_inputModel.gridCellHitCoordinates.y >= 0)
                 {
                     SetCellMaterial(m_prevCell, m_gridConfiguration.regularMaterial);
-                    var commonEdge = m_currCell.DetectCommonEdge(m_prevCell);
+                    var commonEdge = Helpers.DetectCommonEdge(m_currCell.transform.position, m_prevCell.transform.position);
 
                     switch (commonEdge)
                     {

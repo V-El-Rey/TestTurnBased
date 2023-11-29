@@ -14,25 +14,25 @@ public static class Helpers
         return new Vector3(input.x, Mathf.Clamp(input.y - 0.25f, 0, 1), input.z);
     }
 
-    public static CommonCellEdges DetectCommonEdge(this CellLineView current, CellLineView previous)
+    public static CommonCellEdges DetectCommonEdge(Vector3 currentPos, Vector3 previousPos)
     {
-        if (previous.transform.position.x == current.transform.position.x + 1)
+        if (previousPos.x == currentPos.x + 1)
         {
             return CommonCellEdges.Right;
         }
-        if (previous.transform.position.x == current.transform.position.x - 1)
+        if (previousPos.x == currentPos.x - 1)
         {
             return CommonCellEdges.Left;
         }
-        if (previous.transform.position.z == current.transform.position.z + 1)
+        if (previousPos.z == currentPos.z + 1)
         {
             return CommonCellEdges.Up;
         }
-        if (previous.transform.position.z == current.transform.position.z - 1)
+        if (previousPos.z == currentPos.z - 1)
         {
             return CommonCellEdges.Bottom;
         }
-        if(previous.transform.position.x == current.transform.position.x + 1 && previous.transform.position.z == current.transform.position.z + 1)
+        if(previousPos.x == currentPos.x + 1 && previousPos.z == currentPos.z + 1)
         {
             return CommonCellEdges.None;
         }
