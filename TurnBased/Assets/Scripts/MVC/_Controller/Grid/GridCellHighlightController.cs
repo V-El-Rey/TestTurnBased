@@ -5,8 +5,8 @@ public class GridCellHighlightController : IBaseController, IUpdateController, I
     private IInputModel m_inputModel;
     private IGridModel m_gridModel;
 
-    private CellLineView m_prevCell;
-    private CellLineView m_currCell;
+    private CellView m_prevCell;
+    private CellView m_currCell;
 
     private GridConfiguration m_gridConfiguration;
 
@@ -67,7 +67,7 @@ public class GridCellHighlightController : IBaseController, IUpdateController, I
         }
     }
 
-    private void SetCellMaterial(CellLineView cell, Material material)
+    private void SetCellMaterial(CellView cell, Material material)
     {
         cell.RightMeshRenderer.material = material;
         cell.UpMeshRenderer.material = material;

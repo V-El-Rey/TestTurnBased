@@ -20,7 +20,7 @@ public class GridSystemDrawCellsController : IBaseController, IEnterController
                 var debugGO = GameObject.Instantiate(gridLineElement);
                 debugGO.transform.SetParent(m_environmentRoot);
                 debugGO.transform.localPosition = new Vector3(i, 0, j);
-                m_gridModel.gridView[i,j] = debugGO.GetComponent<CellLineView>();
+                m_gridModel.gridView[i,j] = debugGO.GetComponent<CellView>();
             }
         }
 

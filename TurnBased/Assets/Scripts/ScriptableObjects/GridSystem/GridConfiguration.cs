@@ -8,4 +8,6 @@ public class GridConfiguration : ScriptableObject
 
     public Material highLightedMaterial;
     public Material regularMaterial;
+
+    public LayerMask gridHitLayerMask;
 }

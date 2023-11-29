@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CellLineView : BaseView
+public class CellView : BaseView
 {
     public GameObject Up;
     public GameObject Right;
-
+    public Transform unitSpawnPoint;
     public MeshRenderer UpMeshRenderer;
     public MeshRenderer RightMeshRenderer;
     public Collider Collider;

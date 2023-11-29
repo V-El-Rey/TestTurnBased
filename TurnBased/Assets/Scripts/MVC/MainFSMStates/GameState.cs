@@ -22,7 +22,7 @@ public class GameState : ControllersDependentState<MainGameState>
     {
         //создание и регистрация моделей для этого стейта
         var gridModel = new GridModel(m_mainConfigurationData.GridConfiguration);
-        var inputModel = new InputModel();
+        var inputModel = new InputModel(m_mainConfigurationData.GridConfiguration.gridHitLayerMask);
         RegisterModel(gridModel);
         RegisterModel(inputModel);
         

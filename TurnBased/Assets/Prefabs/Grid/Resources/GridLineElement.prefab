@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8493196793704428800}
   - component: {fileID: 7655264718783886279}
   - component: {fileID: 5358538809426961366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1451369683390125479}
   - component: {fileID: 2642793351020014870}
   - component: {fileID: 4662838405592207119}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8221186272009480547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 9149480168254906572}
   - component: {fileID: -7608118298612933173}
   - component: {fileID: 8023163295733822072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GridLineElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4638727379099815929}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -8,7 +8,7 @@ public class GridModel : IGridModel
     public int width { get; set; }
     public int height { get; set; }
     public int[,] gridCells { get; set; }
-    public CellLineView[,] gridView { get; set; }
+    public CellView[,] gridView { get; set; }
 
     public void ClearModel()
     {

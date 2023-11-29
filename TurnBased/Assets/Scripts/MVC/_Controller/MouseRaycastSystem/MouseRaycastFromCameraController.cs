@@ -21,7 +21,7 @@ public class MouseRaycastFromCameraController : IBaseController, IUpdateControll
 
         Ray ray = Camera.main.ScreenPointToRay(m_inputModel.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 100))
+        if(Physics.Raycast(ray, out hit, 100, m_inputModel.gridLayerMask))
         {
             m_inputModel.gridCellHitCoordinates = new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.z);
         } 

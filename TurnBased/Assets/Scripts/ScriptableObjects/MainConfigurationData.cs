@@ -4,4 +4,5 @@ using UnityEngine;
 public class MainConfigurationData : ScriptableObject
 {
     public GridConfiguration GridConfiguration;
+    public ArmyConfiguration ArmyConfiguration;
 }
