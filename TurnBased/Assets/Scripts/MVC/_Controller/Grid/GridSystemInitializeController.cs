@@ -9,5 +9,6 @@ public class GridSystemInitializeController : IBaseController, IEnterController
     public void OnEnterExecute()
     {
         m_gridModel.gridCells = new int[m_gridModel.width, m_gridModel.height];
+        m_gridModel.gridView = new CellLineView[m_gridModel.width + 1, m_gridModel.height + 1];
     }
 }

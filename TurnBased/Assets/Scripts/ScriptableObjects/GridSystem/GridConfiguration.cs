@@ -5,4 +5,7 @@ public class GridConfiguration : ScriptableObject
 {
     public int width;
     public int height;
+
+    public Material highLightedMaterial;
+    public Material regularMaterial;
 }

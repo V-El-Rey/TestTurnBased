@@ -10,3 +10,12 @@
         PlayerTwo,
         Pause
     }
+
+    public enum CommonCellEdges
+    {
+        None,
+        Up,
+        Right,
+        Bottom,
+        Left
+    }

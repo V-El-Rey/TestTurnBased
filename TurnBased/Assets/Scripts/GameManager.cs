@@ -5,12 +5,14 @@ namespace Client
 {
     public class GameManager : MonoBehaviour
     {
-        public Transform UIRoot;
+        public SceneStaticData SceneStaticData;
         public MainConfigurationData MainConfigurationData;
         private StateManager<MainGameState> m_mainGameStateManager;
+        private IStateChangeModel<MainGameState> m_stateChangeModel;
         //Главный класс, запускающий игру
         public void Awake()
         {
+            m_stateChangeModel = new StateChangeModel<MainGameState>();
             InitializeStateManager();
         }
 
@@ -29,11 +31,11 @@ namespace Client
 
         private void InitializeStateManager()
         {
-            m_mainGameStateManager = new StateManager<MainGameState>();
+            m_mainGameStateManager = new StateManager<MainGameState>(m_stateChangeModel);
             // States MainGameState.Loading] = new 
             // States MainGameState.MainMenu] = 
-            m_mainGameStateManager.States[MainGameState.Game] = new GameState(MainGameState.Game, m_mainGameStateManager, MainConfigurationData);
-            m_mainGameStateManager.States[MainGameState.MainMenu] = new MainMenu(MainGameState.MainMenu, m_mainGameStateManager, UIRoot);
+            m_mainGameStateManager.States[MainGameState.Game] = new GameState(MainGameState.Game, m_stateChangeModel, MainConfigurationData, SceneStaticData);
+            m_mainGameStateManager.States[MainGameState.MainMenu] = new MainMenu(MainGameState.MainMenu, m_stateChangeModel, SceneStaticData);
             m_mainGameStateManager.CurrentState = m_mainGameStateManager.States[MainGameState.MainMenu];
             m_mainGameStateManager.InitStateManager();
 

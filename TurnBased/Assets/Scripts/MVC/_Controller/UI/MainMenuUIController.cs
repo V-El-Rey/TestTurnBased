@@ -1,5 +1,4 @@
 using System;
-using Base;
 using UnityEngine;
 
 public class MainMenuUIController : IBaseController, IEnterController, IExitController
@@ -7,12 +6,12 @@ public class MainMenuUIController : IBaseController, IEnterController, IExitCont
     private GameObject m_uiPrefab;
     private MainMenuView m_mainMenuView;
     private Transform m_uiRoot;
-    private StateManager<MainGameState> m_stateManager;
-    public MainMenuUIController(Transform uiRoot, StateManager<MainGameState> stateManager)
+    private IStateChangeModel<MainGameState> m_stateChangeModel;
+    public MainMenuUIController(Transform uiRoot, IStateChangeModel<MainGameState> stateChangeModel)
     {
         m_uiRoot = uiRoot;
         m_uiPrefab = Resources.Load<GameObject>(LocalConstants.MAIN_MENU);
-        m_stateManager = stateManager;
+        m_stateChangeModel = stateChangeModel;
     }
 
         public void OnEnterExecute()
@@ -31,7 +30,7 @@ public class MainMenuUIController : IBaseController, IEnterController, IExitCont
     }
     private Action StartGameClickedHandler()
     {
-        return () => m_stateManager.SwitchState(MainGameState.Game);
+        return () => m_stateChangeModel.onStateChangeRequested?.Invoke(MainGameState.Game);
     }
 
     private Action QuitGameClickedHandler()

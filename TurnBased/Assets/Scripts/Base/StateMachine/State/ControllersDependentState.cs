@@ -1,16 +1,15 @@
 using System;
-using UnityEngine;
 using Base;
 using System.Collections.Generic;
 
 public class ControllersDependentState<TState> : BaseState<TState>, IBaseStateLoop where TState : Enum
 {
     private List<IStateModel> m_stateModels;
-    public StateManager<TState> StateManager;
+    public IStateChangeModel<TState> StateChangeModel;
     public ControllersManager ControllersManager { get; } 
-    public ControllersDependentState(TState key, StateManager<TState> stateManager) : base(key)
+    public ControllersDependentState(TState key, IStateChangeModel<TState> stateChangeModel) : base(key)
     {
-        StateManager = stateManager;
+        StateChangeModel = stateChangeModel;
         ControllersManager = new ControllersManager();
         m_stateModels = new List<IStateModel>();
     }

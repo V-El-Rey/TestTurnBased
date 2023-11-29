@@ -1,15 +1,18 @@
-using Base;
 using UnityEngine;
 
 public class MainMenu : ControllersDependentState<MainGameState>
 {
-    public MainMenu(MainGameState key, StateManager<MainGameState> stateManager, Transform uiRoot) : base(key, stateManager)
+    private IStateChangeModel<MainGameState> m_stateChangeModel;
+    private Transform m_uiRoot;
+    public MainMenu(MainGameState key, IStateChangeModel<MainGameState> stateChangeModel, SceneStaticData sceneStaticData) : base(key, stateChangeModel)
     {
-        ControllersManager.AddController(new MainMenuUIController(uiRoot, stateManager));
+        m_stateChangeModel = stateChangeModel;
+        m_uiRoot = sceneStaticData.UIRoot;
     }
 
     public override void EnterState()
     {
+        ControllersManager.AddController(new MainMenuUIController(m_uiRoot, m_stateChangeModel));
         base.EnterState();
     }
 

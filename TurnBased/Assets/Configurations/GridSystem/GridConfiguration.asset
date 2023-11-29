@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 10
   height: 10
+  highLightedMaterial: {fileID: 2100000, guid: 79c3f5f7c3a5494479bffb9b7bea1484, type: 2}
+  regularMaterial: {fileID: 2100000, guid: 2d90affb2e012864aafc98dcd8cff1b5, type: 2}
