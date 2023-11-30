@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MainConfigurationData
   m_EditorClassIdentifier: 
   GridConfiguration: {fileID: 11400000, guid: 7cd07cc09426b02439520467f167604f, type: 2}
+  ArmyConfiguration: {fileID: 11400000, guid: a29a9f120a9a02f40aa1613f2d2feb63, type: 2}

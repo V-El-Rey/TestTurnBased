@@ -12,7 +12,7 @@ public class MainMenu : ControllersDependentState<MainGameState>
 
     public override void EnterState()
     {
-        ControllersManager.AddController(new MainMenuUIController(m_uiRoot, m_stateChangeModel));
+        ControllersManager.AddController(new MainMenuUIController(LocalConstants.MAIN_MENU, m_uiRoot, m_stateChangeModel));
         base.EnterState();
     }
 

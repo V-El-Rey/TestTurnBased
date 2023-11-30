@@ -8,7 +8,14 @@ public class GridSystemInitializeController : IBaseController, IEnterController
     }
     public void OnEnterExecute()
     {
-        m_gridModel.gridCells = new int[m_gridModel.width, m_gridModel.height];
+        m_gridModel.grid = new GridNode[m_gridModel.width, m_gridModel.height];
+        for(int x = 0; x < m_gridModel.width; x++)
+        {
+            for(int y = 0; y < m_gridModel.height; y++)
+            {   
+                m_gridModel.grid[x,y] = new GridNode(x, y);
+            }
+        }
         m_gridModel.gridView = new CellView[m_gridModel.width + 1, m_gridModel.height + 1];
     }
 }

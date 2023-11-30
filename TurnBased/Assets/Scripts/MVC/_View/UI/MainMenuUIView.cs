@@ -2,16 +2,16 @@ using UnityEngine.UIElements;
 
 public class MainMenuView : UIView
 {
-    public Button startGame;
-    public Button quitGame;
+    public Button StartGame;
+    public Button QuitGame;
     public override void OnEnable()
     {
         base.OnEnable();
-        startGame = root.Q<Button>(LocalConstants.UIBUTTON_START);
-        quitGame = root.Q<Button>(LocalConstants.UIBUTTON_QUIT);
+        StartGame = root.Q<Button>(LocalConstants.UIBUTTON_START);
+        QuitGame = root.Q<Button>(LocalConstants.UIBUTTON_QUIT);
 
         //TODO: Локализации
-        startGame.text = LocalConstants.UIBUTTON_START;
-        quitGame.text = LocalConstants.UIBUTTON_QUIT;
+        StartGame.text = LocalConstants.UIBUTTON_START;
+        QuitGame.text = LocalConstants.UIBUTTON_QUIT;
     }
 }

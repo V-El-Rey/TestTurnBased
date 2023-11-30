@@ -6,6 +6,8 @@ public class ControllersDependentState<TState> : BaseState<TState>, IBaseStateLo
 {
     private List<IStateModel> m_stateModels;
     public IStateChangeModel<TState> StateChangeModel;
+    private CombatState key;
+
     public ControllersManager ControllersManager { get; } 
     public ControllersDependentState(TState key, IStateChangeModel<TState> stateChangeModel) : base(key)
     {

@@ -139,5 +139,9 @@ public class PlayersArmyEditor : EditorWindow
             };
             m_playerTwoArmy.Add(result);
         }
+        var configGUID = AssetDatabase.FindAssets("ArmyConfigurator");
+        var objectsPath = AssetDatabase.GUIDToAssetPath(configGUID[0]);
+        var asset = AssetDatabase.LoadAssetAtPath(objectsPath, typeof(ArmyConfiguration));
+        AssetDatabase.SaveAssetIfDirty(asset);
     }
 }

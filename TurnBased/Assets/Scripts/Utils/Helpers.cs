@@ -16,6 +16,10 @@ public static class Helpers
 
     public static CommonCellEdges DetectCommonEdge(Vector3 currentPos, Vector3 previousPos)
     {
+        if(previousPos.x == currentPos.x + 1 && previousPos.z == currentPos.z + 1)
+        {
+            return CommonCellEdges.None;
+        }
         if (previousPos.x == currentPos.x + 1)
         {
             return CommonCellEdges.Right;
@@ -31,10 +35,6 @@ public static class Helpers
         if (previousPos.z == currentPos.z - 1)
         {
             return CommonCellEdges.Bottom;
-        }
-        if(previousPos.x == currentPos.x + 1 && previousPos.z == currentPos.z + 1)
-        {
-            return CommonCellEdges.None;
         }
         return CommonCellEdges.None;
     }

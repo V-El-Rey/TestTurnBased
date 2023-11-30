@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PassTurn" style="flex-direction: row; flex-shrink: 0; align-self: flex-end; transform-origin: right top; translate: 0 0; width: 120px; height: 15px; top: 5%;" />
+    </ui:VisualElement>
+</ui:UXML>

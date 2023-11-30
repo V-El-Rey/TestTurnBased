@@ -1,13 +1,14 @@
-using System;
-using UnityEditor;
-using UnityEngine;
+using System.Collections.Generic;
 
-[Serializable]
-public class PlayerUnitModel
+public class PlayerArmyModel : IStateModel
 {
-    public string UnitName;
-    public float Health;
-    public float Attack;
-    public int actionPoints;
-    public GameObject prefab;
+    public PlayerArmyModel(List<PlayerUnitModel> units)
+    {
+        m_units = units;
+    }
+    public List<PlayerUnitModel> m_units;
+    public void ClearModel()
+    {
+        m_units.Clear();
+    }
 }

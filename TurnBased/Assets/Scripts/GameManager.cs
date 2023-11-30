@@ -12,7 +12,7 @@ namespace Client
         //Главный класс, запускающий игру
         private void Start()
         {
-            m_stateChangeModel = new StateChangeModel<MainGameState>();
+            m_stateChangeModel = new StateChangeModel<MainGameState>(MainGameState.MainMenu);
             InitializeStateManager();
         }
 

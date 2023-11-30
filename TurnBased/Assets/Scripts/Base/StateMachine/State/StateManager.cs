@@ -34,6 +34,7 @@ namespace Base
             isStateTransitioning = true;
             CurrentState.ExitState();
             CurrentState = States[nextStateKey];
+            m_stateChangeModel.CurrentStateKey = nextStateKey;
             CurrentState.EnterState();
             isStateTransitioning = false;
         }

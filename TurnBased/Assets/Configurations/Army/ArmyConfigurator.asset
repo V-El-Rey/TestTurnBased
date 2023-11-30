@@ -13,14 +13,9 @@ MonoBehaviour:
   m_Name: ArmyConfigurator
   m_EditorClassIdentifier: 
   playerOneArmy:
-  - Name: Zalupa
+  - UnitName: Warrior
     Health: 100
-    Attack: 10
+    Attack: 2
     actionPoints: 5
-    prefab: {fileID: 0}
-  - Name: 
-    Health: 0
-    Attack: 0
-    actionPoints: 0
-    prefab: {fileID: 0}
+    prefab: {fileID: 3769526159163421822, guid: ba3c3e62c78b73548b915b400b05f620, type: 3}
   playerTwoArmy: []
