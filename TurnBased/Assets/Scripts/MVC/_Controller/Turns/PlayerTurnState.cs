@@ -32,6 +32,7 @@ public class PlayerTurnState : ControllersDependentState<CombatState>
         ControllersManager.AddController(new SelectUnitController(m_inputModel, m_armyModel, m_gridModel, m_unitSelectionModel));
         ControllersManager.AddController(new MoveUnitsController(m_inputModel, m_gridModel, m_unitSelectionModel, m_pathfindingModel, m_armyModel));
         ControllersManager.AddController(new UnitAttackController(m_pathfindingModel, m_gridModel, m_enemyArmyModel, m_unitSelectionModel));
+        ControllersManager.AddController(new UnitTakeDamageAndDieController(m_enemyArmyModel));
 
         base.EnterState();
     }

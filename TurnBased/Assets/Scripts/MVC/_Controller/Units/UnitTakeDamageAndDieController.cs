@@ -23,6 +23,6 @@ public class UnitTakeDamageAndDieController : IBaseController, IEnterController,
     }
     private void ProcessDamage(PlayerUnitModel model, int amount, bool diagonal)
     {
-        m_enemyArmyModel.units.First(e => e.Equals(model)).Health -= amount;
+        m_enemyArmyModel.units.First(e => e.UnitName == model.UnitName).Health -= amount;
     }
 }
