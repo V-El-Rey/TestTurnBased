@@ -3,11 +3,24 @@ using UnityEditor;
 using UnityEngine;
 
 [Serializable]
-public class PlayerUnitModel
+public class PlayerUnitModel : ICloneable
 {
     public string UnitName;
-    public float Health;
-    public float Attack;
+    public int Health;
+    public int Attack;
     public int actionPoints;
     public GameObject prefab;
+
+    public object Clone()
+    {
+        var res = new PlayerUnitModel()
+        {
+            UnitName = UnitName,
+            Health = Health,
+            Attack = Attack,
+            actionPoints = actionPoints,
+            prefab = prefab
+        };
+        return res;
+    }
 }

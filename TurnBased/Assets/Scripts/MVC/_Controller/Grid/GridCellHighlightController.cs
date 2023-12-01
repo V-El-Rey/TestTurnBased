@@ -1,79 +1,95 @@
 using UnityEngine;
 
-public class GridCellHighlightController : IBaseController, IUpdateController, IEnterController
+public class GridCellHighlightController : IBaseController, IUpdateController, IEnterController, IExitController
 {
     private IInputModel m_inputModel;
     private IGridModel m_gridModel;
+    private IUnitSelectionModel m_unitSelectionModel;
 
     private CellView m_prevCell;
     private CellView m_currCell;
 
     private GridConfiguration m_gridConfiguration;
 
-    public GridCellHighlightController(IInputModel inputModel, IGridModel gridModel, GridConfiguration gridConfiguration)
+    public GridCellHighlightController(IInputModel inputModel, IGridModel gridModel, IUnitSelectionModel unitSelectionModel, GridConfiguration gridConfiguration)
     {
         m_inputModel = inputModel;
         m_gridModel = gridModel;
+        m_unitSelectionModel = unitSelectionModel;
         m_gridConfiguration = gridConfiguration;
     }
 
     public void OnEnterExecute()
     {
+        m_unitSelectionModel.onCellSelectionHighlightChangeRequested += SetCellMaterial;
         m_prevCell = m_gridModel.gridView[(int)m_inputModel.gridCellHitCoordinates.x, (int)m_inputModel.gridCellHitCoordinates.y];
         m_currCell = m_gridModel.gridView[(int)m_inputModel.gridCellHitCoordinates.x, (int)m_inputModel.gridCellHitCoordinates.y];
     }
 
+    public void OnExitExecute()
+    {
+        m_unitSelectionModel.onCellSelectionHighlightChangeRequested -= SetCellMaterial;
+    }
+
     public void OnUpdateExecute()
     {
-        if (m_inputModel.gridCellHitCoordinates.x != -1 && m_inputModel.gridCellHitCoordinates.y != -1)
+        HighlightCell();
+    }
+
+    private void HighlightCell()
+    {
+        var x = (int)m_inputModel.gridCellHitCoordinates.x;
+        var y = (int)m_inputModel.gridCellHitCoordinates.y;
+        if (x != -1 && y != -1)
         {
-            m_currCell = m_gridModel.gridView[(int)m_inputModel.gridCellHitCoordinates.x, (int)m_inputModel.gridCellHitCoordinates.y];
-            SetCellMaterial(m_currCell, m_gridConfiguration.highLightedMaterial);
+            var currGridNode = m_gridModel.grid[(int)m_currCell.transform.position.x, (int)m_currCell.transform.position.z];
+            var prevGridNode = m_gridModel.grid[(int)m_prevCell.transform.position.x, (int)m_prevCell.transform.position.z];
+
+            m_currCell = m_gridModel.gridView[x, y];
+            if (!currGridNode.isSelected)
+            {
+                SetCellMaterial(m_currCell, CellSelectionState.Highlighted);
+            }
             if (m_currCell.transform.position != m_prevCell.transform.position)
             {
-                if (m_inputModel.gridCellHitCoordinates.x < m_gridModel.width && m_inputModel.gridCellHitCoordinates.y < m_gridModel.height &&
-                    m_inputModel.gridCellHitCoordinates.x >= 0 && m_inputModel.gridCellHitCoordinates.y >= 0)
+                if (x < m_gridModel.width && y < m_gridModel.height &&
+                    x >= 0 && y >= 0)
                 {
-                    SetCellMaterial(m_prevCell, m_gridConfiguration.regularMaterial);
-                    var commonEdge = Helpers.DetectCommonEdge(m_currCell.transform.position, m_prevCell.transform.position);
-
-                    switch (commonEdge)
+                    if (!prevGridNode.isSelected)
                     {
-                        case CommonCellEdges.None:
-                            break;
-                        case CommonCellEdges.Right:
-                            m_prevCell.UpMeshRenderer.material = m_gridConfiguration.highLightedMaterial;
-                            break;
-                        case CommonCellEdges.Left:
-                            m_currCell.UpMeshRenderer.material = m_gridConfiguration.highLightedMaterial;
-                            break;
-                        case CommonCellEdges.Up:
-                            m_prevCell.RightMeshRenderer.material = m_gridConfiguration.highLightedMaterial;
-                            break;
-                        case CommonCellEdges.Bottom:
-                            m_currCell.RightMeshRenderer.material = m_gridConfiguration.highLightedMaterial;
-                            break;
+                        SetCellMaterial(m_prevCell, CellSelectionState.None);
+                    }
+                    else
+                    {
+                        SetCellMaterial(m_prevCell, CellSelectionState.Selected);
                     }
                 }
                 m_prevCell = m_currCell;
             }
         }
-        else
-        {
-            if (m_prevCell.RightMeshRenderer.material != m_gridConfiguration.regularMaterial)
-            {
-                SetCellMaterial(m_prevCell, m_gridConfiguration.regularMaterial);
-            }
-        }
     }
 
-    private void SetCellMaterial(CellView cell, Material material)
+    private void SetCellMaterial(CellView cell, CellSelectionState state)
     {
-        cell.RightMeshRenderer.material = material;
-        cell.UpMeshRenderer.material = material;
-        m_gridModel.gridView[(int)cell.transform.position.x, (int)cell.transform.position.z + 1].RightMeshRenderer.material
-            = material;
-        m_gridModel.gridView[(int)cell.transform.position.x + 1, (int)cell.transform.position.z].UpMeshRenderer.material
-            = material;
+        Material mat = m_gridConfiguration.regularMaterial;
+        switch (state)
+        {
+            case CellSelectionState.None:
+                mat = m_gridConfiguration.regularMaterial;
+                break;
+            case CellSelectionState.Highlighted:
+                mat = m_gridConfiguration.highLightedMaterial;
+                break;
+            case CellSelectionState.Selected:
+                mat = m_gridConfiguration.selectedCellMaterial;
+                break;
+            case CellSelectionState.Possible:
+                mat = m_gridConfiguration.possibleCellMaterial;
+                break;
+        }
+        foreach (var meshR in cell.meshRenderers)
+        {
+            meshR.material = mat;
+        }
     }
 }

@@ -1,14 +1,22 @@
+using System;
 using System.Collections.Generic;
 
-public class PlayerArmyModel : IStateModel
+public class PlayerArmyModel : IPlayerArmyModel
 {
+    public List<PlayerUnitModel> units { get; set; }
+    public List<UnitView> unitViews { get; set; }
+    public Action<PlayerUnitModel, int, bool> onTakeDamage { get; set; }
+
     public PlayerArmyModel(List<PlayerUnitModel> units)
     {
-        m_units = units;
+        unitViews = new List<UnitView>();
+        this.units = units;
     }
-    public List<PlayerUnitModel> m_units;
+
     public void ClearModel()
     {
-        m_units.Clear();
+        onTakeDamage = null;
+        units.Clear();
+        unitViews.Clear();
     }
 }

@@ -7,8 +7,7 @@
     public enum CombatState
     {
         PlayerOne,
-        PlayerTwo,
-        Pause
+        PlayerTwo
     }
 
     public enum CommonCellEdges
@@ -18,4 +17,13 @@
         Right,
         Bottom,
         Left
+    }
+
+    public enum CellSelectionState
+    {
+        None,
+        Highlighted,
+        Selected,
+        Attacked,
+        Possible
     }

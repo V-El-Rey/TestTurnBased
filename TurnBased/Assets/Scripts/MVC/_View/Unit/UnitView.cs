@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitView : BaseView
 {
-    public Rigidbody Rigidbody;
+    public Transform healthBar_scale;
+    public Transform healthBar;
 }

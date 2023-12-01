@@ -1,4 +1,6 @@
-public class GridSystemInitializeController : IBaseController, IEnterController
+using System.Diagnostics;
+
+public class GridSystemInitializeController : IBaseController, IEnterController, IUpdateController
 {
     private IGridModel m_gridModel;
 
@@ -9,13 +11,25 @@ public class GridSystemInitializeController : IBaseController, IEnterController
     public void OnEnterExecute()
     {
         m_gridModel.grid = new GridNode[m_gridModel.width, m_gridModel.height];
-        for(int x = 0; x < m_gridModel.width; x++)
+        for (int x = 0; x < m_gridModel.width; x++)
         {
-            for(int y = 0; y < m_gridModel.height; y++)
-            {   
-                m_gridModel.grid[x,y] = new GridNode(x, y);
+            for (int y = 0; y < m_gridModel.height; y++)
+            {
+                m_gridModel.grid[x, y] = new GridNode(x, y);
             }
         }
-        m_gridModel.gridView = new CellView[m_gridModel.width + 1, m_gridModel.height + 1];
+        m_gridModel.gridView = new CellView[m_gridModel.width, m_gridModel.height];
+    }
+
+    public void OnUpdateExecute()
+    {
+        for (int x = 0; x < m_gridModel.width; x++)
+        {
+            for (int y = 0; y < m_gridModel.height; y++)
+            {
+                // m_gridModel.gridView[x,y].debug.text = $"Occupied: {m_gridModel.grid[x,y].isOccupied} \n" + 
+                //     $"Selected: {m_gridModel.grid[x,y].isSelected} \n";
+            }
+        }
     }
 }

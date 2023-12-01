@@ -46,4 +46,9 @@ public class ControllersManager
     {
         m_controllers.Add(controller);
     }
+
+    public void DisposeControllers()
+    {
+        m_controllers.Clear();
+    }
 }

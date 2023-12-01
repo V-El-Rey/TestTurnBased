@@ -63,15 +63,15 @@ public class PlayersArmyEditor : EditorWindow
 
     }
 
-    private void CreateUnitCard(List<VisualElement> cardList, VisualElement root, string unitName = "Unit name", float health = 0, float attack = 0, int actionPoints = 0, GameObject prefab = null)
+    private void CreateUnitCard(List<VisualElement> cardList, VisualElement root, string unitName = "Unit name", int health = 0, int attack = 0, int actionPoints = 0, GameObject prefab = null)
     {
         var card = new VisualElement();
         var spacer = new ToolbarSpacer();
         spacer.style.height = 25;
         card.Add(spacer);
         card.Add(new TextField("Unit name") { value = unitName });
-        card.Add(new FloatField("Health") { value = health });
-        card.Add(new FloatField("Attack"){ value = attack });
+        card.Add(new IntegerField("Health") { value = health });
+        card.Add(new IntegerField("Attack"){ value = attack });
         card.Add(new IntegerField("Action Points"){ value = actionPoints });
         card.Add(new ObjectField("Unit Prefab"){ value = prefab });
         card.Add(spacer);
@@ -120,8 +120,8 @@ public class PlayersArmyEditor : EditorWindow
             var result = new PlayerUnitModel
             {
                 UnitName = ((TextField)e[0]).value,
-                Health = ((FloatField)e[1]).value,
-                Attack = ((FloatField)e[2]).value,
+                Health = ((IntegerField)e[1]).value,
+                Attack = ((IntegerField)e[2]).value,
                 actionPoints = ((IntegerField)e[3]).value,
                 prefab = ((ObjectField)e[4]).value as GameObject
             };
@@ -132,8 +132,8 @@ public class PlayersArmyEditor : EditorWindow
             var result = new PlayerUnitModel
             {
                 UnitName = ((TextField)e[0]).value,
-                Health = ((FloatField)e[1]).value,
-                Attack = ((FloatField)e[2]).value,
+                Health = ((IntegerField)e[1]).value,
+                Attack = ((IntegerField)e[2]).value,
                 actionPoints = ((IntegerField)e[3]).value,
                 prefab = ((ObjectField)e[4]).value as GameObject
             };

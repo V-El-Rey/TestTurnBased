@@ -1,57 +1,69 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GridPathfindingSystemController : IBaseController, IEnterController, IExitController, IUpdateController
+public class GridPathfindingSystemController : IBaseController, IEnterController, IExitController
 {
     private const int MOVE_COST = 10;
     private const int DIAGONAL_COST = 14;
     private IGridModel m_gridModel;
     private IInputModel m_inputModel;
+    private IPathfindingModel m_pathfindingModel;
     private List<GridNode> m_openGridNodes;
     private List<GridNode> m_closedGridNodes;
-    public GridPathfindingSystemController(IGridModel gridModel, IInputModel inputModel)
+    public GridPathfindingSystemController(IGridModel gridModel, IInputModel inputModel, IPathfindingModel pathfindingModel)
     {
         m_gridModel = gridModel;
         m_inputModel = inputModel;
+        m_pathfindingModel = pathfindingModel;
     }
 
     public void OnEnterExecute()
     {
+        m_pathfindingModel.onPathRequested += SetPathInModel;
     }
 
     public void OnExitExecute()
     {
+        m_pathfindingModel.onPathRequested -= SetPathInModel;
     }
 
-    public void OnUpdateExecute()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Рисую линию для дебуга
-            var gridCellPosX = (int)m_inputModel.gridCellHitCoordinates.x;
-            var gridCellPosY = (int)m_inputModel.gridCellHitCoordinates.y;
-            var path = FindPath(0, 0, gridCellPosX, gridCellPosY);
-            if (path != null)
-            {
-                for (int i = 0; i < path.Count - 1; i++)
-                {
-                    Debug.DrawLine(m_gridModel.gridView[path[i].x, path[i].y].unitSpawnPoint.transform.position, m_gridModel.gridView[path[i + 1].x, path[i + 1].y].unitSpawnPoint.transform.position, Color.green, 2f);
-                }
-            }
-        }
-    }
+    // УДОЛИТЬ
+    // private void DebugDrawPath()
+    // {
+    //     var gridCellPosX = (int)m_inputModel.gridCellHitCoordinates.x;
+    //     var gridCellPosY = (int)m_inputModel.gridCellHitCoordinates.y;
+    //     var path = FindPath(0, 0, gridCellPosX, gridCellPosY);
+    //     if (path != null)
+    //     {
+    //         for (int i = 0; i < path.Count - 1; i++)
+    //         {
+    //             Debug.DrawLine(m_gridModel.gridView[path[i].x, path[i].y].unitSpawnPoint.transform.position, m_gridModel.gridView[path[i + 1].x, path[i + 1].y].unitSpawnPoint.transform.position, Color.green, 2f);
+    //         }
+    //     }
+    // }
 
 
     private List<GridNode> FindPath(int startX, int startY, int endX, int endY)
     {
-        if(endX == -1 || endY == -1)
+        if (endX == -1 || endY == -1)
         {
             return null;
         }
         var startNode = m_gridModel.grid[startX, startY];
         var endNode = m_gridModel.grid[endX, endY];
+        var startNodeNeighbors = Helpers.GetNeighborNodes(m_gridModel, startNode);
+        if (startNodeNeighbors.Contains(endNode))
+        {
+            return null;
+        }
+        if (endNode.isOccupied)
+        {
+            var endNodeNeighbors = Helpers.GetNeighborNodes(m_gridModel, endNode).Where(e => !e.isOccupied).ToList();
+            int r = Random.Range(0, endNodeNeighbors.Count);
+            endNode = endNodeNeighbors[r];
+        }
 
         m_openGridNodes = new List<GridNode> { startNode };
         m_closedGridNodes = new List<GridNode>();
@@ -82,10 +94,15 @@ public class GridPathfindingSystemController : IBaseController, IEnterController
             m_openGridNodes.Remove(currentNode);
             m_closedGridNodes.Add(currentNode);
 
-            foreach (var neighborNode in GetNeighborNodes(currentNode))
+            foreach (var neighborNode in Helpers.GetNeighborNodes(m_gridModel, currentNode))
             {
                 if (m_closedGridNodes.Contains(neighborNode))
                 {
+                    continue;
+                }
+                if (neighborNode.isOccupied)
+                {
+                    m_closedGridNodes.Add(neighborNode);
                     continue;
                 }
 
@@ -133,7 +150,7 @@ public class GridPathfindingSystemController : IBaseController, IEnterController
     {
         int xDistance = Mathf.Abs(nodeA.x - nodeB.x);
         int yDistance = Mathf.Abs(nodeA.y - nodeB.y);
-        int remain = Math.Abs(xDistance - yDistance);
+        int remain = System.Math.Abs(xDistance - yDistance);
         return DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_COST * remain;
     }
 
@@ -150,43 +167,23 @@ public class GridPathfindingSystemController : IBaseController, IEnterController
         return lowestFCostNode;
     }
 
-    private List<GridNode> GetNeighborNodes(GridNode node)
+    private void SetPathInModel(int startX, int startY, int endX, int endY)
     {
-        var result = new List<GridNode>();
-        if (node.x - 1 >= 0)
+        if(startX == endX && startY == endY)
         {
-            result.Add(m_gridModel.grid[node.x - 1, node.y]);
-            if (node.y - 1 >= 0)
-            {
-                result.Add(m_gridModel.grid[node.x - 1, node.y - 1]);
-            }
-            if (node.y + 1 < m_gridModel.height)
-            {
-                result.Add(m_gridModel.grid[node.x - 1, node.y + 1]);
-            }
+            m_pathfindingModel.Path.Clear();
+            return;
         }
-
-        if (node.x + 1 < m_gridModel.width)
+        var path = FindPath(startX, startY, endX, endY);
+        if (path != null)
         {
-            result.Add(m_gridModel.grid[node.x + 1, node.y]);
-            if (node.y - 1 >= 0)
+            m_pathfindingModel.Path.Clear();
+            //рисует линию для дебуга
+            for (int i = 0; i < path.Count - 1; i++)
             {
-                result.Add(m_gridModel.grid[node.x + 1, node.y - 1]);
+                Debug.DrawLine(m_gridModel.gridView[path[i].x, path[i].y].unitSpawnPoint.transform.position, m_gridModel.gridView[path[i + 1].x, path[i + 1].y].unitSpawnPoint.transform.position, Color.green, 2f);
             }
-            if (node.y + 1 < m_gridModel.height)
-            {
-                result.Add(m_gridModel.grid[node.x + 1, node.y + 1]);
-            }
+            m_pathfindingModel.Path = path;
         }
-
-        if (node.y - 1 >= 0)
-        {
-            result.Add(m_gridModel.grid[node.x, node.y - 1]);
-        }
-        if (node.y + 1 < m_gridModel.height)
-        {
-            result.Add(m_gridModel.grid[node.x, node.y + 1]);
-        }
-        return result;
     }
 }

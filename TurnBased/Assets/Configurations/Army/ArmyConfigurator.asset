@@ -13,9 +13,29 @@ MonoBehaviour:
   m_Name: ArmyConfigurator
   m_EditorClassIdentifier: 
   playerOneArmy:
-  - UnitName: Warrior
+  - UnitName: Oleg
     Health: 100
-    Attack: 2
+    Attack: 8
+    actionPoints: 4
+    prefab: {fileID: 3769526159163421822, guid: ba3c3e62c78b73548b915b400b05f620, type: 3}
+  - UnitName: Stas
+    Health: 120
+    Attack: 10
+    actionPoints: 3
+    prefab: {fileID: 3769526159163421822, guid: ba3c3e62c78b73548b915b400b05f620, type: 3}
+  - UnitName: Kostyan
+    Health: 150
+    Attack: 20
     actionPoints: 5
     prefab: {fileID: 3769526159163421822, guid: ba3c3e62c78b73548b915b400b05f620, type: 3}
-  playerTwoArmy: []
+  playerTwoArmy:
+  - UnitName: Pasha
+    Health: 70
+    Attack: 5
+    actionPoints: 2
+    prefab: {fileID: 183820589670693313, guid: 0ca789ecd5b73894fa51b1031d7f8ed9, type: 3}
+  - UnitName: Gosha
+    Health: 70
+    Attack: 5
+    actionPoints: 4
+    prefab: {fileID: 183820589670693313, guid: 0ca789ecd5b73894fa51b1031d7f8ed9, type: 3}

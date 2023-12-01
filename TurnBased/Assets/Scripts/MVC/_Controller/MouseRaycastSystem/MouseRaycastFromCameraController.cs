@@ -24,11 +24,10 @@ public class MouseRaycastFromCameraController : IBaseController, IUpdateControll
         if(Physics.Raycast(ray, out hit, 100, m_inputModel.gridLayerMask))
         {
             m_inputModel.gridCellHitCoordinates = new Vector2(hit.collider.transform.position.x, hit.collider.transform.position.z);
-        } 
+        }
         else
         {
-            m_inputModel.gridCellHitCoordinates = new Vector2(-1.0f, -1.0f);
-
+            m_inputModel.gridCellHitCoordinates = new Vector2(-1, -1);
         }
     }
 }

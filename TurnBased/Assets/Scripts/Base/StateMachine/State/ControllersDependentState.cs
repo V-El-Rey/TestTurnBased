@@ -16,6 +16,7 @@ public class ControllersDependentState<TState> : BaseState<TState>, IBaseStateLo
         m_stateModels = new List<IStateModel>();
     }
 
+
     public virtual void EnterState()
     {
         ControllersManager.OnEnterControllersExecute();
@@ -30,6 +31,7 @@ public class ControllersDependentState<TState> : BaseState<TState>, IBaseStateLo
     {
         ControllersManager.OnExitControllersExecute();
         ClearStateModels();
+        ControllersManager.DisposeControllers();
     }
 
     public void RegisterModel(IStateModel model)

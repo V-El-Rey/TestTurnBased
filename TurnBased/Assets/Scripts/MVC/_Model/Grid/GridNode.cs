@@ -1,5 +1,3 @@
-using System;
-
 public class GridNode
 {
     public int x;
@@ -8,6 +6,10 @@ public class GridNode
     public int gCost;
     public int hCost;
     public int fCost;
+    public UnitView unit;
+    public PlayerUnitModel playerUnitModel;
+    public bool isSelected;
+    public bool isOccupied;
 
     public GridNode previousPathNode;
 
@@ -15,10 +17,7 @@ public class GridNode
     {
         this.x = x;
         this.y = y;
-    }
-
-    public override string ToString()
-    {
-        return $"{x} : {y}";
+        isOccupied = false;
+        isSelected = false;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Helpers
@@ -37,5 +38,50 @@ public static class Helpers
             return CommonCellEdges.Bottom;
         }
         return CommonCellEdges.None;
+    }
+
+    public static List<GridNode> GetNeighborNodes(IGridModel gridModel, GridNode node)
+    {
+         var result = new List<GridNode>();
+        if (node.x - 1 >= 0)
+        {
+            result.Add(gridModel.grid[node.x - 1, node.y]);
+            if (node.y - 1 >= 0)
+            {
+                result.Add(gridModel.grid[node.x - 1, node.y - 1]);
+            }
+            if (node.y + 1 < gridModel.height)
+            {
+                result.Add(gridModel.grid[node.x - 1, node.y + 1]);
+            }
+        }
+
+        if (node.x + 1 < gridModel.width)
+        {
+            result.Add(gridModel.grid[node.x + 1, node.y]);
+            if (node.y - 1 >= 0)
+            {
+                result.Add(gridModel.grid[node.x + 1, node.y - 1]);
+            }
+            if (node.y + 1 < gridModel.height)
+            {
+                result.Add(gridModel.grid[node.x + 1, node.y + 1]);
+            }
+        }
+
+        if (node.y - 1 >= 0)
+        {
+            result.Add(gridModel.grid[node.x, node.y - 1]);
+        }
+        if (node.y + 1 < gridModel.height)
+        {
+            result.Add(gridModel.grid[node.x, node.y + 1]);
+        }
+        return result;
+    }
+
+    public static void ResetPossibleNodes(IGridModel gridModel, GridNode node)
+    {
+        
     }
 }
